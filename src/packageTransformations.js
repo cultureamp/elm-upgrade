@@ -181,5 +181,11 @@ module.exports = {
   ],
   "BrianHicks/elm-benchmark": [
     { action: "installPackage", packageName: "elm-explorations/benchmark" }
+  ],
+  "rnons/ordered-containers": [
+    {
+      action: "installPackage",
+      packageName: "y0hy0h/ordered-containers"
+    }
   ]
 };
