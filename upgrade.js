@@ -95,17 +95,10 @@ function displaySuccessMessage(packagesRequiringUpgrade) {
 }
 /*
   Locate a binary based on name, if not found, error out with message
-Provide binFolder in order to look there first
 */
-function findBinary(binFolder, name, message, extraInfo) {
+function findBinary(name, message, extraInfo) {
   var binary = null;
 
-  // first look in binFolder
-  try {
-    binary = which.sync(name, { path: binFolder });
-  } catch (e) {}
-
-  // then just look all over path
   if (binary === null) {
     try {
       binary = which.sync(name);
@@ -162,10 +155,7 @@ function main(knownPackages) {
     return supportedPackages[packageName];
   }
 
-  var localBinPath = "./node_modules/.bin/";
-  var localFindBinary = findBinary.bind(null, localBinPath);
-
-  var elm = localFindBinary(
+  var elm = findBinary(
     "elm",
     "elm was not found on your PATH.  Make sure you have Elm 0.19 installed.",
     howToInstallElm()
@@ -184,7 +174,7 @@ function main(knownPackages) {
   }
   logInfo("Found elm " + elmVersion);
 
-  var elmFormat = localFindBinary(
+  var elmFormat = findBinary(
     "elm-format",
     "elm-format was not found on your PATH.  Make sure you have elm-format installed.",
     howToInstallElmFormat()
