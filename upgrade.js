@@ -55,10 +55,6 @@ function howToInstallElm() {
   return "Install Elm here https://guide.elm-lang.org/get_started.html#install\n";
 }
 
-function howToInstallElmFormat() {
-  return "You can download Elm format here https://github.com/avh4/elm-format#installation-\n";
-}
-
 function displayHintForNonUpgradedPackage(packageName) {
   logWarning(`${packageName} has not been upgraded to 0.19 yet!`);
 }
@@ -173,25 +169,6 @@ function main(knownPackages) {
     exit(1);
   }
   logInfo("Found elm " + elmVersion);
-
-  var elmFormat = findBinary(
-    "elm-format",
-    "elm-format was not found on your PATH.  Make sure you have elm-format installed.",
-    howToInstallElmFormat()
-  );
-
-  var elmFormatUsage = childProcess.execFileSync(elmFormat);
-  var elmFormatVersion = elmFormatUsage
-    .toString()
-    .split("\n")[0]
-    .trim()
-    .split(" ")[1];
-  if (semver.lt(elmFormatVersion, "0.8.0")) {
-    logError("elm-format >= 0.8.0 required, but found " + elmFormatVersion);
-    logErrorMessage(howToInstallElmFormat());
-    exit(1);
-  }
-  logInfo("Found elm-format " + elmFormatVersion);
 
   function installPackage(name) {
     try {
@@ -500,25 +477,6 @@ function main(knownPackages) {
   fs.unlinkSync("elm-package.json");
 
   // TODO: deal with source-directories for packages
-
-  elmPackage["source-directories"].forEach(function(sourceDir) {
-    if (!fs.existsSync(sourceDir)) {
-      logWarning(
-        "source directory " +
-          sourceDir +
-          " listed in your elm-package.json does not exist"
-      );
-    } else {
-      logInfo("Upgrading *.elm files in " + sourceDir + "/");
-      childProcess.execFileSync(elmFormat, [
-        "--upgrade",
-        "--yes",
-        "--elm-version",
-        "0.19",
-        sourceDir
-      ]);
-    }
-  });
 
   logMessage("\n\n");
   displaySuccessMessage(Object.keys(packagesRequiringUpgrade));
