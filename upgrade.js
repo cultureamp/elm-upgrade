@@ -13,6 +13,8 @@ var packageTransformations = require("./src/packageTransformations");
 
 var logHandle = null;
 
+const customElmBinary = process.argv[2];
+
 function exit(status) {
   if (logHandle) {
     fs.closeSync(logHandle);
@@ -151,11 +153,13 @@ function main(knownPackages) {
     return supportedPackages[packageName];
   }
 
-  var elm = findBinary(
-    "elm",
-    "elm was not found on your PATH.  Make sure you have Elm 0.19 installed.",
-    howToInstallElm()
-  );
+  var elm =
+    customElmBinary ||
+    findBinary(
+      "elm",
+      "elm was not found on your PATH.  Make sure you have Elm 0.19 installed.",
+      howToInstallElm()
+    );
 
   var elmUsage = childProcess.execFileSync(elm, ["--version"]);
   var elmVersion = elmUsage.toString().split("\n")[0];
