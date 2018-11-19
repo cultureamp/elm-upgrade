@@ -1,5 +1,5 @@
 module.exports = {
-  "elm-html-extra": [
+  "elm-community/html-extra": [
     {
       action: "installPackage",
       packageName: "elm/html",
