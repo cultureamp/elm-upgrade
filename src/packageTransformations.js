@@ -1,4 +1,42 @@
 module.exports = {
+  "elm-html-extra": [
+    {
+      action: "installPackage",
+      packageName: "elm/html",
+      todos: [
+        "Replace uses of Html.Events.Extra",
+        "Replace uses of Html.Attributes.Extra"
+      ]
+    },
+  ],
+  "eeue56/elm-html-test": [
+    {
+      action: "installPackage",
+      packageName: "elm-explorations/test",
+      todos: [
+        "Move elm-explorations/test to test dependencies"
+      ]
+    },
+  ],
+  "elm-community/elm-datepicker": [
+    {
+      action: "installPackage",
+      packageName: "CurrySoftware/elm-datepicker"
+    },
+    {
+      action: "installPackage",
+      packageName: "justinmimbs/date"
+    }
+  ],
+  "justinmimbs/elm-date-extra": [
+    {
+      action: "installPackage",
+      packageName: "justinmimbs/date",
+      todos: [
+        "Check date requirements: timezoneless justinmimbs/date has been installed, but it might be time to switch to elm/date!"
+      ]
+    }
+  ],
   "NoRedInk/elm-decode-pipeline": [
     {
       action: "installPackage",
